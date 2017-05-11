@@ -22,7 +22,7 @@ import isaac.math.LinearMath;
 import isaac.math.Matrix;
 import isaac.math.Numeric;
 
-public interface Polygon<T extends Evaluatable<T>> {
+public interface Polygon<T extends Evaluatable> {
 
 	public Vertex<T> vertex(int index);
 

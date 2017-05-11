@@ -21,7 +21,7 @@ import isaac.math.Evaluatable;
 import isaac.math.Numeric;
 import isaac.math.Vector;
 
-public class Vertex<T extends Evaluatable<T>> extends Vector<T> {
+public class Vertex<T extends Evaluatable> extends Vector<T> {
 	
 	public Vertex(){
 		super(3);
