@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2017 Aaron Powers
+ *  Copyright (C) 2018 Aaron Powers
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,38 +19,27 @@ package shirley.geometry;
 
 import java.util.ArrayList;
 
-import isaac.math.Numeric;
-
-public class PolygonTest implements Polygon{
+public class TwoDPolygon implements Polygon{
 	
 	private ArrayList<Vertex> vertices;
-	
-	public PolygonTest(){
+
+	public TwoDPolygon(){
 		vertices = new ArrayList<Vertex>();
 	}
 	
-	public void addVertex(double x, double y, double z){
-		vertices.add(new Vertex(x,y,z));
+	public void add(double x, double y){
+		vertices.add(new Vertex(x,y,0));
 	}
-
+	
 	@Override
 	public Vertex vertex(int index) {
 		return vertices.get(index);
 	}
 
+
 	@Override
 	public int numVertices() {
 		return vertices.size();
-	}
-
-	public static void main(String[] args){
-		PolygonTest polygon = new PolygonTest();
-		polygon.addVertex(0, 0, 0);
-		polygon.addVertex(111.8, 0, 0);
-		polygon.addVertex(96.8, 15, 0);
-		polygon.addVertex(15, 15, 0);
-		
-		System.out.println(polygon.area());
 	}
 
 }

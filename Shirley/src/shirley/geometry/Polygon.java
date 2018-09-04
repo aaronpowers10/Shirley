@@ -17,52 +17,50 @@
  */
 package shirley.geometry;
 
-import isaac.math.Evaluatable;
 import isaac.math.LinearMath;
 import isaac.math.Matrix;
 import isaac.math.Numeric;
 
-public interface Polygon<T extends Evaluatable> {
+public interface Polygon {
 
-	public Vertex<T> vertex(int index);
+	public Vertex vertex(int index);
 
 	public int numVertices();
 
-	@SuppressWarnings("unchecked")
-	public default Vertex<Numeric> unitNormal() {
-		Matrix<T> matrix1 = new Matrix<T>(3, 3);
-		Matrix<T> matrix2 = new Matrix<T>(3, 3);
-		Matrix<T> matrix3 = new Matrix<T>(3, 3);
+	public default Vertex unitNormal() {
+		Matrix matrix1 = new Matrix(3, 3);
+		Matrix matrix2 = new Matrix(3, 3);
+		Matrix matrix3 = new Matrix(3, 3);
 
-		matrix1.set(0, 0, (T) new Numeric(1));
+		matrix1.set(0, 0, new Numeric(1));
 		matrix1.set(0, 1, vertex(0).y());
 		matrix1.set(0, 2, vertex(0).z());
-		matrix1.set(1, 0, (T) new Numeric(1));
+		matrix1.set(1, 0, new Numeric(1));
 		matrix1.set(1, 1, vertex(1).y());
 		matrix1.set(1, 2, vertex(1).z());
-		matrix1.set(2, 0, (T) new Numeric(1));
+		matrix1.set(2, 0, new Numeric(1));
 		matrix1.set(2, 1, vertex(2).y());
 		matrix1.set(2, 2, vertex(2).z());
 
 		matrix2.set(0, 0, vertex(0).x());
-		matrix2.set(0, 1, (T) new Numeric(1));
+		matrix2.set(0, 1, new Numeric(1));
 		matrix2.set(0, 2, vertex(0).z());
 		matrix2.set(1, 0, vertex(1).x());
-		matrix2.set(1, 1, (T) new Numeric(1));
+		matrix2.set(1, 1, new Numeric(1));
 		matrix2.set(1, 2, vertex(1).z());
 		matrix2.set(2, 0, vertex(2).x());
-		matrix2.set(2, 1, (T) new Numeric(1));
+		matrix2.set(2, 1, new Numeric(1));
 		matrix2.set(2, 2, vertex(2).z());
 
 		matrix3.set(0, 0, vertex(0).x());
 		matrix3.set(0, 1, vertex(0).y());
-		matrix3.set(0, 2, (T) new Numeric(1));
+		matrix3.set(0, 2, new Numeric(1));
 		matrix3.set(1, 0, vertex(1).x());
 		matrix3.set(1, 1, vertex(1).y());
-		matrix3.set(1, 2, (T) new Numeric(1));
+		matrix3.set(1, 2, new Numeric(1));
 		matrix3.set(2, 0, vertex(2).x());
 		matrix3.set(2, 1, vertex(2).y());
-		matrix3.set(2, 2, (T) new Numeric(1));
+		matrix3.set(2, 2, new Numeric(1));
 
 		double x = matrix1.determinant();
 		double y = matrix2.determinant();
@@ -70,27 +68,26 @@ public interface Polygon<T extends Evaluatable> {
 
 		double magnitude = Math.sqrt(x * x + y * y + z * z);
 
-		return new Vertex<Numeric>(x / magnitude, y / magnitude, z / magnitude);
+		return new Vertex(x / magnitude, y / magnitude, z / magnitude);
 
 	}
 
-	@SuppressWarnings("unchecked")
 	public default double area() {
-		Vertex<T> total = new Vertex<T>();
+		Vertex total = new Vertex();
 		for(int i=0;i<numVertices();i++){
-			Vertex<T> v1 = vertex(i);
-			Vertex<T> v2;
+			Vertex v1 = vertex(i);
+			Vertex v2;
 			if(i==numVertices()-1){
 				v2 = vertex(0);
 			} else {
 				v2 = vertex(i+1);
 			}
 			
-			Vertex<T> prod = v1.cross(v2);
+			Vertex prod = v1.cross(v2);
 			
-			total.setX((T)new Numeric(total.x().get() + prod.x().get()));
-			total.setY((T)new Numeric(total.y().get() + prod.y().get()));
-			total.setZ((T)new Numeric(total.z().get() + prod.z().get()));			
+			total.setX(new Numeric(total.x().get() + prod.x().get()));
+			total.setY(new Numeric(total.y().get() + prod.y().get()));
+			total.setZ(new Numeric(total.z().get() + prod.z().get()));			
 		}
 		return Math.abs(0.5*LinearMath.dotProduct(total, this.unitNormal()).get());
 	}

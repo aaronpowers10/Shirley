@@ -21,61 +21,60 @@ import isaac.math.Evaluatable;
 import isaac.math.Numeric;
 import isaac.math.Vector;
 
-public class Vertex<T extends Evaluatable> extends Vector<T> {
+public class Vertex extends Vector {
 	
 	public Vertex(){
 		super(3);
 	}
 	
-	public Vertex(T x, T y, T z){
+	public Vertex(Evaluatable x, Evaluatable y, Evaluatable z){
 		super();
 		add(x);
 		add(y);
 		add(z);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Vertex(double x, double y, double z){
 		super();
-		add((T)new Numeric(x));
-		add((T)new Numeric(y));
-		add((T)new Numeric(z));
+		add(new Numeric(x));
+		add(new Numeric(y));
+		add(new Numeric(z));
 	}
 	
-	public T x(){
+	public Evaluatable x(){
 		return this.get(0);
 	}
 	
-	public T y(){
+	public Evaluatable y(){
 		return this.get(1);
 	}
 	
-	public T z(){
+	public Evaluatable z(){
 		return this.get(2);
 	}
 	
-	public void setX(T x){
+	public void setX(Evaluatable x){
 		set(0,x);
 	}
 	
-	public void setY(T y){
+	public void setY(Evaluatable y){
 		set(1,y);
 	}
 	
-	public void setZ(T z){
+	public void setZ(Evaluatable z){
 		set(2,z);
 	}
 	
-	public Vertex<T> cross(Vertex<T> vertex){
+	public Vertex cross(Vertex vertex){
 		
 		double x = y().get()*vertex.z().get() - z().get()*vertex.y().get();
 		double y = z().get()*vertex.x().get() - x().get()*vertex.z().get();
 		double z = x().get()*vertex.y().get() - y().get()*vertex.x().get();
-		Vertex<T> result = new Vertex<T>(x,y,z);
+		Vertex result = new Vertex(x,y,z);
 		return result;
 	}
 	
-	public double distanceTo(Vertex<T> vertex){
+	public double distanceTo(Vertex vertex){
 		return Math.sqrt((x().get()-vertex.x().get())*(x().get()-vertex.x().get()) + 
 				(y().get()-vertex.y().get())*(y().get()-vertex.y().get()) +
 				(z().get()-vertex.z().get())*(z().get()-vertex.z().get()));
